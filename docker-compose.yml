@@ -1,0 +1,7 @@
+services:
+  broker-fuseki:
+    image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/fuseki
+    expose:
+      - "3030"
+    ports:
+      - 3030:3030

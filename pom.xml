@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.7</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>de.fhg.ivi</groupId>
+    <artifactId>ids-broker-service</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
+        <ids.messaging.version>6.1.1</ids.messaging.version>
+        <broker.version>5.0.1</broker.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.fraunhofer.ids.messaging</groupId>
+            <artifactId>messaging</artifactId>
+            <version>${ids.messaging.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.fraunhofer.iais.eis.ids</groupId>
+            <artifactId>open-index-common</artifactId>
+            <version>${broker.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-image</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>isst-nexus-public</id>
+            <name>isst-public</name>
+            <url>https://mvn.ids.isst.fraunhofer.de/nexus/repository/ids-public/</url>
+        </repository>
+        <repository>
+            <id>github-sebplorenz</id>
+            <name>github-sebplorenz</name>
+            <url>https://maven.pkg.github.com/sebplorenz/metadata-broker-open-core</url>
+        </repository>
+    </repositories>
+
+</project>
