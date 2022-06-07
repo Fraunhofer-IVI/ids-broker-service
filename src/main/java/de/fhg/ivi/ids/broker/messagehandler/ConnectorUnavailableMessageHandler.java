@@ -1,10 +1,10 @@
 package de.fhg.ivi.ids.broker.messagehandler;
 
-import de.fhg.ivi.ids.broker.core.SelfDescriptionPersistenceAndIndexing;
 import de.fraunhofer.iais.eis.ConnectorUnavailableMessage;
 import de.fraunhofer.iais.eis.ConnectorUnavailableMessageImpl;
-import de.fraunhofer.ids.messaging.handler.message.SupportedMessageType;
-import de.fraunhofer.ids.messaging.response.MessageResponse;
+import de.fraunhofer.iais.eis.ids.broker.core.common.impl.SelfDescriptionPersistenceAdapter;
+import ids.messaging.handler.message.SupportedMessageType;
+import ids.messaging.response.MessageResponse;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 public class ConnectorUnavailableMessageHandler extends AbstractMessageHandler<ConnectorUnavailableMessage> {
 
     @Autowired
-    SelfDescriptionPersistenceAndIndexing connectorIndexing;
+    SelfDescriptionPersistenceAdapter connectorIndexing;
 
     @Override
     @SneakyThrows
-    public MessageResponse handleMessage(ConnectorUnavailableMessage queryHeader, String payload) {
-        connectorIndexing.unavailable(queryHeader.getIssuerConnector()); // TODO shouldn't this be the affectedConnector?
-        return null;
+    public MessageResponse handleMessage(ConnectorUnavailableMessage message, String payload) {
+        connectorIndexing.unavailable(message.getIssuerConnector()); // TODO shouldn't this be the affectedConnector?
+        return messageProcessed(message);
     }
 }

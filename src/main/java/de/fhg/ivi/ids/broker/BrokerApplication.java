@@ -1,7 +1,10 @@
 package de.fhg.ivi.ids.broker;
 
-import de.fhg.ivi.ids.broker.core.SelfDescriptionPersistenceAndIndexing;
 import de.fraunhofer.iais.eis.InfrastructureComponent;
+import de.fraunhofer.iais.eis.ids.broker.core.common.impl.ResourcePersistenceAdapter;
+import de.fraunhofer.iais.eis.ids.broker.core.common.impl.SelfDescriptionPersistenceAdapter;
+import de.fraunhofer.iais.eis.ids.broker.core.common.persistence.ResourcePersistenceAndIndexing;
+import de.fraunhofer.iais.eis.ids.broker.core.common.persistence.SelfDescriptionPersistenceAndIndexing;
 import de.fraunhofer.iais.eis.ids.index.common.persistence.NullIndexing;
 import de.fraunhofer.iais.eis.ids.index.common.persistence.RepositoryFacade;
 import de.fraunhofer.iais.eis.ids.index.common.persistence.spi.Indexing;
@@ -17,8 +20,8 @@ import java.util.ServiceLoader;
 
 @ComponentScan({
         "de.fhg.ivi.ids.broker",
-        "de.fraunhofer.ids.*",
-        "de.fraunhofer.ids.messaging.*"
+        "ids.*",
+        "ids.messaging.*"
 })
 @SpringBootApplication
 public class BrokerApplication {
@@ -40,19 +43,29 @@ public class BrokerApplication {
         return ServiceLoader.load(Indexing.class).findFirst().orElse(new NullIndexing<InfrastructureComponent>());
     }
 
-    @Bean
+    @Bean(name="ConnectorIndexer")
     @Autowired
-    SelfDescriptionPersistenceAndIndexing createConnectorIndexer(
+    SelfDescriptionPersistenceAdapter createConnectorIndexer(
             RepositoryFacade repositoryFacade,
             Indexing<InfrastructureComponent> indexing,
             @Value("${component.catalogUri}") URI catalogURI
     ) {
+        // TODO externalize number of indexed connector resources
         return new SelfDescriptionPersistenceAndIndexing(
                 repositoryFacade,
                 catalogURI,
                 indexing,
                 100
         );
+    }
+
+    @Bean
+    ResourcePersistenceAdapter createResourceIndexer(
+            RepositoryFacade repositoryFacade,
+            @Value("${component.catalogUri}") URI catalogURI
+    ) {
+        // TODO externalize number of indexed connector resources
+        return new ResourcePersistenceAndIndexing(repositoryFacade, catalogURI, 100);
     }
 
 }

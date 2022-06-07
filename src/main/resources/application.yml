@@ -26,3 +26,5 @@ component:
   catalogUri: http://localhost:8080/connectors/
   responseSenderAgent: https://www.iais.fraunhofer.de
 
+logging.level:
+    de.fraunhofer: DEBUG

@@ -3,16 +3,16 @@ package de.fhg.ivi.ids.broker.messagehandler;
 import de.fraunhofer.iais.eis.DynamicAttributeToken;
 import de.fraunhofer.iais.eis.Message;
 import de.fraunhofer.iais.eis.MessageProcessedNotificationMessageBuilder;
-import de.fraunhofer.ids.messaging.core.config.ConfigContainer;
-import de.fraunhofer.ids.messaging.core.daps.ConnectorMissingCertExtensionException;
-import de.fraunhofer.ids.messaging.core.daps.DapsConnectionException;
-import de.fraunhofer.ids.messaging.core.daps.DapsEmptyResponseException;
-import de.fraunhofer.ids.messaging.core.daps.DapsTokenProvider;
-import de.fraunhofer.ids.messaging.handler.message.MessageHandler;
-import de.fraunhofer.ids.messaging.handler.message.MessagePayload;
-import de.fraunhofer.ids.messaging.response.BodyResponse;
-import de.fraunhofer.ids.messaging.response.MessageResponse;
-import de.fraunhofer.ids.messaging.util.IdsMessageUtils;
+import ids.messaging.core.config.ConfigContainer;
+import ids.messaging.core.daps.ConnectorMissingCertExtensionException;
+import ids.messaging.core.daps.DapsConnectionException;
+import ids.messaging.core.daps.DapsEmptyResponseException;
+import ids.messaging.core.daps.DapsTokenProvider;
+import ids.messaging.handler.message.MessageHandler;
+import ids.messaging.handler.message.MessagePayload;
+import ids.messaging.response.BodyResponse;
+import ids.messaging.response.MessageResponse;
+import ids.messaging.util.IdsMessageUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,6 +37,9 @@ public abstract class AbstractMessageHandler<T extends Message> implements Messa
     }
 
     String readPayload(MessagePayload payload) {
+        if (payload == null || payload.getUnderlyingInputStream() == null)
+            return null;
+
         try {
             return new String(payload.getUnderlyingInputStream().readAllBytes(), StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -68,5 +71,5 @@ public abstract class AbstractMessageHandler<T extends Message> implements Messa
         }
     }
 
-    public abstract MessageResponse handleMessage(T queryHeader, String payload);
+    public abstract MessageResponse handleMessage(T message, String payload);
 }

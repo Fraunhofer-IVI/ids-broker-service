@@ -1,12 +1,12 @@
 package de.fhg.ivi.ids.broker.messagehandler;
 
-import de.fhg.ivi.ids.broker.core.SelfDescriptionPersistenceAndIndexing;
 import de.fraunhofer.iais.eis.ConnectorUpdateMessage;
 import de.fraunhofer.iais.eis.ConnectorUpdateMessageImpl;
 import de.fraunhofer.iais.eis.InfrastructureComponent;
+import de.fraunhofer.iais.eis.ids.broker.core.common.impl.SelfDescriptionPersistenceAdapter;
 import de.fraunhofer.iais.eis.ids.jsonld.Serializer;
-import de.fraunhofer.ids.messaging.handler.message.SupportedMessageType;
-import de.fraunhofer.ids.messaging.response.MessageResponse;
+import ids.messaging.handler.message.SupportedMessageType;
+import ids.messaging.response.MessageResponse;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class ConnectorUpdateMessageHandler extends AbstractMessageHandler<ConnectorUpdateMessage> {
 
     @Autowired
-    SelfDescriptionPersistenceAndIndexing connectorIndexing;
+    SelfDescriptionPersistenceAdapter connectorIndexing;
 
     @Autowired
     Serializer serializer;

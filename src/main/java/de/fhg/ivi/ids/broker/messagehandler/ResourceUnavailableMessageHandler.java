@@ -2,20 +2,24 @@ package de.fhg.ivi.ids.broker.messagehandler;
 
 import de.fraunhofer.iais.eis.ResourceUnavailableMessage;
 import de.fraunhofer.iais.eis.ResourceUnavailableMessageImpl;
-import de.fraunhofer.ids.messaging.handler.message.MessageHandler;
-import de.fraunhofer.ids.messaging.handler.message.MessageHandlerException;
-import de.fraunhofer.ids.messaging.handler.message.MessagePayload;
-import de.fraunhofer.ids.messaging.handler.message.SupportedMessageType;
-import de.fraunhofer.ids.messaging.response.MessageResponse;
+import de.fraunhofer.iais.eis.ids.broker.core.common.impl.ResourcePersistenceAdapter;
+import ids.messaging.handler.message.SupportedMessageType;
+import ids.messaging.response.MessageResponse;
+import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @SupportedMessageType(ResourceUnavailableMessageImpl.class)
-public class ResourceUnavailableMessageHandler implements MessageHandler<ResourceUnavailableMessage> {
+public class ResourceUnavailableMessageHandler extends AbstractMessageHandler<ResourceUnavailableMessage> {
+
+    @Autowired
+    ResourcePersistenceAdapter resourcePersistenceAdapter;
 
     @Override
-    public MessageResponse handleMessage(ResourceUnavailableMessage queryHeader, MessagePayload payload)
-            throws MessageHandlerException {
-        return null;
+    @SneakyThrows
+    public MessageResponse handleMessage(ResourceUnavailableMessage message, String payload) {
+        resourcePersistenceAdapter.unavailable(message.getAffectedResource(), message.getIssuerConnector());
+        return messageProcessed(message);
     }
 }

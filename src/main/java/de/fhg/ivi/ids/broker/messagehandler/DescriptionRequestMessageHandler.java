@@ -1,20 +1,14 @@
 package de.fhg.ivi.ids.broker.messagehandler;
 
-import de.fraunhofer.iais.eis.*;
+import de.fraunhofer.iais.eis.Connector;
+import de.fraunhofer.iais.eis.DescriptionRequestMessage;
+import de.fraunhofer.iais.eis.DescriptionRequestMessageImpl;
+import de.fraunhofer.iais.eis.DescriptionResponseMessageBuilder;
 import de.fraunhofer.iais.eis.ids.jsonld.Serializer;
-import de.fraunhofer.ids.messaging.core.config.ConfigContainer;
-import de.fraunhofer.ids.messaging.core.daps.ConnectorMissingCertExtensionException;
-import de.fraunhofer.ids.messaging.core.daps.DapsConnectionException;
-import de.fraunhofer.ids.messaging.core.daps.DapsEmptyResponseException;
-import de.fraunhofer.ids.messaging.core.daps.DapsTokenProvider;
-import de.fraunhofer.ids.messaging.handler.message.MessageHandler;
-import de.fraunhofer.ids.messaging.handler.message.MessageHandlerException;
-import de.fraunhofer.ids.messaging.handler.message.MessagePayload;
-import de.fraunhofer.ids.messaging.handler.message.SupportedMessageType;
-import de.fraunhofer.ids.messaging.response.BodyResponse;
-import de.fraunhofer.ids.messaging.response.MessageResponse;
-import de.fraunhofer.ids.messaging.util.IdsMessageUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import ids.messaging.handler.message.SupportedMessageType;
+import ids.messaging.response.BodyResponse;
+import ids.messaging.response.MessageResponse;
+import ids.messaging.util.IdsMessageUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
